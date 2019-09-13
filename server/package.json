@@ -1,0 +1,28 @@
+{
+    "name": "mern-skeleton-server",
+    "version": "1.0.0",
+    "description": "server-side of mern-skeleton",
+    "author": "Juan David Hurtado",
+    "license": "MIT",
+    "main": "server.js",
+    "keywords": [],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/juandahurt/mern-skeleton"
+    },
+    "engines": {
+        "node": "10.15.1",
+        "npm": "6.4.1"
+    },
+    "scripts": {
+        "start": "node src/server.js",
+        "dev": "nodemon"
+    },
+    "dependencies": {
+        "express": "4.16",
+        "mongoose": "^5.6.6"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.1"
+    }
+}
