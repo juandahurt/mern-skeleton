@@ -1,7 +1,7 @@
 # nodejs-template
-NodeJS template.
+Node.js template.
 
-To run this template make sure you have installed NodeJS on your computer.
+To run this template make sure you have installed Node.js on your computer.
 ``` 
 npm install
 npm start 
