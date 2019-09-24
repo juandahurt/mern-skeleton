@@ -1,4 +1,4 @@
-# mern-skeleton
+# nodejs-template
 NodeJS template.
 
 To run this template make sure you have installed NodeJS on your computer.
