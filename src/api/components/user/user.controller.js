@@ -31,8 +31,8 @@ const userController = {
         }
 
         try {
-            let formatedEmail = email.toLowerCase();
-            let user = await User.findOne({email: formatedEmail}).exec();
+            let formated_email = email.toLowerCase();
+            let user = await User.findOne({email: formated_email}).exec();
 
             if (user) {
                 // email provided is already registered
@@ -41,14 +41,14 @@ const userController = {
             } 
 
             // create the new user
-            let newUser = new User({
+            let new_user = new User({
                 name: name,
                 email: email,
                 password: password
             });
-            let userSaved = await newUser.save();
+            let user_saved = await new_user.save();
 
-            res.status(200).send(userSaved);
+            res.status(200).send(user_saved);
         } catch (err) {
             res.status(500).send({error: err.message});
         }
