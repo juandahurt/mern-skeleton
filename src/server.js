@@ -1,15 +1,19 @@
-const config = require('./config/config');
+/**
+ * Main module.
+ */
+
+const { config } = require('./config');
 const app = require('./express');
 const connect = require('./mongoose');
+const logger = require('logger');
 
 connect().catch((err) => {
-    console.log('server: database connection error: %s', err.message);
+   logger.error(`database connection error: ${err.message}`);
 });
 
-// server
 app.listen(config.port, (err) => {
     if (err) {
-        console.error('server: error: %s', err.message);
+        logger.error(err.message);
     }
-    console.log('server: listening on port %s.', config.port);
+    logger.info(`listening on port ${config.port}`);
 });

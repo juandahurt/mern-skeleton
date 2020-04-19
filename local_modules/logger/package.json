@@ -1,0 +1,14 @@
+{
+  "name": "logger",
+  "version": "0.0.1",
+  "description": "A simple logger.",
+  "main": "index.js",
+  "keywords": [
+    "logger"
+  ],
+  "author": "Juan David Hurtado",
+  "license": "MIT",
+  "dependencies": {
+    "winston": "^3.2.1"
+  }
+}

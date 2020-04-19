@@ -1,32 +1,31 @@
 const ERRORS = require('./user.errors');
 const User = require('./user.model');
+const logger = require('logger');
 
 const userController = {
     /**
      * Create a new user only if the provided email is not being used and 
      * all the fields are provided.
-     * @param {object} req - client request
-     * @param {oobject} res - server response
+     * @param req - client request
+     * @param res - server response
      */
     async create(req, res) {
-        // check for missing fields
         const name = req.body.name;
         const email = req.body.email;
         const password = req.body.password;
 
-        // return error if no name provided
         if (!name) {
-            res.status(422).send({error: ERRORS.INVALID_NAME});
+            res.status(422).send(ERRORS.INVALID_NAME);
             return;
         }
-        // return error if no email no privided
+        // return error if no email privided
         if (!email) {
-            res.status(422).send({error: ERRORS.INVALID_EMAIL});
+            res.status(422).send(ERRORS.INVALID_EMAIL);
             return;
         }
-        // return error if no password no privided
+        // return error if no password provided
         if (!password) {
-            res.status(422).send({error: ERRORS.INVALID_PASSWORD});
+            res.status(422).send(ERRORS.INVALID_PASSWORD);
             return;
         }
 
@@ -36,7 +35,7 @@ const userController = {
 
             if (user) {
                 // email provided is already registered
-                res.status(422).send({error: ERRORS.ALREADY_REGISTERED});
+                res.status(422).send(ERRORS.ALREADY_REGISTERED);
                 return;
             } 
 
@@ -50,7 +49,8 @@ const userController = {
 
             res.status(200).send(user_saved);
         } catch (err) {
-            res.status(500).send({error: err.message});
+            logger.error(err.message);
+            res.status(500).send(ERRORS.NOT_REGISTERED);
         }
     },
     async delete(req, res) {

@@ -1,21 +1,26 @@
+/**
+ * DB connection events
+ */
+
 const db = require('./config/database');
 const mongoose = require('mongoose');
+const logger = require('logger');
 
-// connection events
+
 mongoose.connection.on('connected', () => {
-    console.log('server: database connected.');
+    logger.info('database connected');
 });
 
 mongoose.connection.on('reconnected', () => {
-    console.log('server: database connections re-established.');
+    logger.info('database connection re-established');
 });
 
 mongoose.connection.on('disconnected', () => {
-    console.log('server: database disconnected.');
+    logger.error('database disconnected');
 });
 
 mongoose.connection.on('close', () => {
-    console.log('server: database closed.');
+    logger.error('database closed');
 });
 
 const connect = async () => {
