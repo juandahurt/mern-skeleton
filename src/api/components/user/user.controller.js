@@ -1,56 +1,37 @@
-const ERRORS = require('./user.errors');
-const User = require('./user.model');
+const AppError = require('../../../error');
 const logger = require('logger');
+const userDAL = require('./user.dal');
 
 const userController = {
     /**
-     * Create a new user only if the provided email is not being used and 
-     * all the fields are provided.
+     * Create a new user.
      * @param req - client request
      * @param res - server response
      */
     async create(req, res) {
-        const name = req.body.name;
-        const email = req.body.email;
-        const password = req.body.password;
-
-        if (!name) {
-            res.status(422).send(ERRORS.INVALID_NAME);
-            return;
-        }
-        // return error if no email privided
-        if (!email) {
-            res.status(422).send(ERRORS.INVALID_EMAIL);
-            return;
-        }
-        // return error if no password provided
-        if (!password) {
-            res.status(422).send(ERRORS.INVALID_PASSWORD);
-            return;
-        }
-
+        // TODO: Add schema validation
+        let context = {
+            user: req.body
+        };
         try {
-            let formated_email = email.toLowerCase();
-            let user = await User.findOne({email: formated_email}).exec();
-
-            if (user) {
-                // email provided is already registered
-                res.status(422).send(ERRORS.ALREADY_REGISTERED);
-                return;
-            } 
-
-            // create the new user
-            let new_user = new User({
-                name: name,
-                email: email,
-                password: password
+            logger.info('creating user...');
+            let user = await userDAL.create(context);
+            res.status(200).send({
+                status: 'success',
+                message: 'User created successfully',
+                data: user
             });
-            let user_saved = await new_user.save();
-
-            res.status(200).send(user_saved);
         } catch (err) {
-            logger.error(err.message);
-            res.status(500).send(ERRORS.NOT_REGISTERED);
+            logger.error(err);
+            if (err instanceof AppError) {
+                res.status(err.httpCode).send({
+                    status: 'error',
+                    message: err.message,
+                    data: context.user
+                });
+            } else {
+                res.status(500).send(err.message);
+            }
         }
     },
     async delete(req, res) {

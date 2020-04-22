@@ -1,9 +1,23 @@
-const ERRORS = {
-    INVALID_NAME: 'You must provide a name.',
-    INVALID_EMAIL: 'You must provide an email address.',
-    INVALID_PASSWORD: 'You must provide a password.',
-    ALREADY_REGISTERED: 'Email already registered.',
-    NOT_REGISTERED: 'User could not be registered'
+/**
+ * User errors
+ */
+const errors = {
+    invalidName: {
+        name: 'Invalid name',
+        description: 'You must provide a valid name'
+    },
+    invalidEmail: {
+        name: 'Invalid email',
+        description: 'You must provide a valid email address'
+    }, 
+    invalidPassword: {
+        name: 'Invalid password',
+        description: 'You must provide a valid password'
+    },
+    emailAlreadyRegistered: {
+        name: 'Email address already registered',
+        description: 'The email address provided is already registered'
+    }
 }
 
-module.exports = ERRORS;
+module.exports = errors;
