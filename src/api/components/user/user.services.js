@@ -1,12 +1,8 @@
-/**
- * User Data Access Layer
- */
-
 const User = require('./user.model');
 const AppError = require('../../../error');
 const errors = require('./user.errors');
 
-const UserDAL = {
+class UserService {
     /**
      * Create a new user
      * @param context Enviroment context (must contain the user)
@@ -25,4 +21,4 @@ const UserDAL = {
     }
 }
 
-module.exports = UserDAL;
+module.exports = UserService;

@@ -1,6 +1,3 @@
-/**
- * User errors
- */
 const errors = {
     invalidName: {
         name: 'Invalid name',

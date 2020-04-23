@@ -1,21 +1,22 @@
 const AppError = require('../../../error');
 const logger = require('logger');
-const userDAL = require('./user.dal');
+const userService = require('./user.services');
+const userSchema = require('./user.schema');
 
-const userController = {
+class UserController {
     /**
      * Create a new user.
      * @param req - client request
      * @param res - server response
      */
-    async create(req, res) {
-        // TODO: Add schema validation
+    static async create(req, res) {
         let context = {
             user: req.body
         };
         try {
-            logger.info('creating user...');
-            let user = await userDAL.create(context);
+            await userSchema.validateAsync(context.user);
+            let user = await new userService().create(context);
+            logger.info(`user ${user._id} has been created`);
             res.status(200).send({
                 status: 'success',
                 message: 'User created successfully',
@@ -26,17 +27,21 @@ const userController = {
             if (err instanceof AppError) {
                 res.status(err.httpCode).send({
                     status: 'error',
-                    message: err.message,
+                    error: {
+                        name: err.name,
+                        description: err.description
+                    },
                     data: context.user
                 });
             } else {
                 res.status(500).send(err.message);
             }
         }
-    },
-    async delete(req, res) {
+    }
+
+    static async delete(req, res) {
         res.json({ msg: 'TODO: delete user' });
     }
 }
 
-module.exports = userController;
+module.exports = UserController;
