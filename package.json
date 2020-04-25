@@ -16,7 +16,8 @@
     },
     "scripts": {
         "start": "node src/server.js",
-        "dev": "nodemon"
+        "dev": "nodemon",
+        "test": "jest"
     },
     "dependencies": {
         "@hapi/joi": "^17.1.1",
@@ -28,6 +29,7 @@
         "morgan": "^1.9.1"
     },
     "devDependencies": {
+        "jest": "^25.4.0",
         "nodemon": "^1.19.1"
     }
 }

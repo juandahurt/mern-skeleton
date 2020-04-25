@@ -24,18 +24,14 @@ const userSchema = new Schema({
     }
 });
 
-//
-// Virtuals
-// 
+
 userSchema.virtual('password')
 .set(function(password) {
     let encrypted_password = this.encryptPassword(password);
     this.hashed_password = encrypted_password;
 });
 
-//
-// Methods
-//
+
 userSchema.methods = {
     authenticate: function (password) {
         return bcrypt.compareSync(password, this.hashed_password);

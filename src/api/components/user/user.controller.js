@@ -1,7 +1,6 @@
 const AppError = require('../../../error');
 const logger = require('logger');
 const userService = require('./user.services');
-const userSchema = require('./user.schema');
 
 class UserController {
     /**
@@ -14,7 +13,6 @@ class UserController {
             user: req.body
         };
         try {
-            await userSchema.validateAsync(context.user);
             let user = await new userService().create(context);
             logger.info(`user ${user._id} has been created`);
             res.status(200).send({
@@ -23,7 +21,7 @@ class UserController {
                 data: user
             });
         } catch (err) {
-            logger.error(err);
+            logger.error('create user failed: ' + err.name);
             if (err instanceof AppError) {
                 res.status(err.httpCode).send({
                     status: 'error',

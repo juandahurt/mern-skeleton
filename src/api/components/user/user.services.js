@@ -1,6 +1,8 @@
-const User = require('./user.model');
 const AppError = require('../../../error');
+const { connectToDB } = require('../../../mongoose');
 const errors = require('./user.errors');
+const User = require('./user.model');
+const userSchema = require('./user.schema');
 
 class UserService {
     /**
@@ -8,6 +10,7 @@ class UserService {
      * @param context Enviroment context (must contain the user)
      */
     async create(context) {
+        await userSchema.validateAsync(context.user);
         let userFound = await User.findOne({email: context.user.email});
         if (userFound !== null) {
             throw new AppError(errors.emailAlreadyRegistered, 422);

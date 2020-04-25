@@ -4,10 +4,10 @@
 
 const { config } = require('./config');
 const app = require('./express');
-const connect = require('./mongoose');
+const { connectToDB } = require('./mongoose');
 const logger = require('logger');
 
-connect().catch((err) => {
+connectToDB().catch((err) => {
    logger.error(`database connection error: ${err.message}`);
 });
 

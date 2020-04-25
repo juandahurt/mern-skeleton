@@ -16,19 +16,33 @@ mongoose.connection.on('reconnected', () => {
 });
 
 mongoose.connection.on('disconnected', () => {
-    logger.error('database disconnected');
+    logger.info('database disconnected');
 });
 
 mongoose.connection.on('close', () => {
-    logger.error('database closed');
+    logger.info('database closed');
 });
 
-const connect = async () => {
-    await mongoose.connect(db.uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
-    });
+const connectToDB = async () => {
+    try {
+        await mongoose.connect(db.uri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        });
+    } catch (err) {
+        logger.error(err.message);
+        process.exit(1);
+    }
 }
 
-module.exports = connect;
+const disconnectDB = async () => {
+    try {
+        await mongoose.connection.close();
+    } catch (err) {
+        logger.error(err.message);
+        process.exit(1);
+    }
+}
+
+module.exports = { connectToDB, disconnectDB };
