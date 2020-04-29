@@ -4,7 +4,7 @@ const userService = require('./user.services');
 
 class UserController {
     /**
-     * Create a new user.
+     * Creates a new user.
      * @param req - client request
      * @param res - server response
      */

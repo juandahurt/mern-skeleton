@@ -1,26 +1,21 @@
 const AppError = require('../../../error');
-const { connectToDB } = require('../../../mongoose');
 const errors = require('./user.errors');
-const User = require('./user.model');
+const UserDAL = require('./user.dal');
 const userSchema = require('./user.schema');
 
 class UserService {
     /**
-     * Create a new user
+     * Creates a new user if the email provided is not being used.
      * @param context Enviroment context (must contain the user)
      */
     async create(context) {
         await userSchema.validateAsync(context.user);
-        let userFound = await User.findOne({email: context.user.email});
-        if (userFound !== null) {
+        let userDAL = new UserDAL();
+
+        if (userDAL.userExists(context.user.email)) {
             throw new AppError(errors.emailAlreadyRegistered, 422);
         }
-        let userRecord = await User.create({
-            name: context.user.name,
-            password: context.user.password,
-            email: context.user.email
-        });
-        return userRecord;
+        return userDAL.create(context.user);
     }
 }
 
