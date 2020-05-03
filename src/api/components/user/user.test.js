@@ -11,7 +11,6 @@ describe('User service', () => {
             await User.deleteMany({});
             await disconnectDB();
         });
-        // afterEach(() => { return User.deleteMany({}) });
         it('should create if all attrs are provided', async () => {
             let context = {
                 user: {

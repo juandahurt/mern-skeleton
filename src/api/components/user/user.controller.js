@@ -1,6 +1,6 @@
 const AppError = require('../../../error');
 const logger = require('logger');
-const userService = require('./user.services');
+const UserService = require('./user.services');
 
 class UserController {
     /**
@@ -13,7 +13,7 @@ class UserController {
             user: req.body
         };
         try {
-            let user = await new userService().create(context);
+            let user = await new UserService().create(context);
             logger.info(`user ${user._id} has been created`);
             res.status(200).send({
                 status: 'success',
@@ -38,7 +38,34 @@ class UserController {
     }
 
     static async delete(req, res) {
-        res.json({ msg: 'TODO: delete user' });
+        let context = {
+            userId: req.params.id
+        }
+        try {
+            let user = await new UserService().delete(context);
+            logger.info(`user ${user._id} has been deleted`);
+            res.status(200).send({
+                status: 'success',
+                message: 'User deleted successfully',
+                data: user
+            });
+        } catch (err) {
+            logger.error('delete user failed: ' + err.name);
+            if (err instanceof AppError) {
+                res.status(err.httpCode).send({
+                    status: 'error',
+                    error: {
+                        name: err.name,
+                        description: err.description
+                    },
+                    data: {
+                        userId: context.userId
+                    }
+                });
+            } else {
+                res.status(500).send(err.message);
+            }
+        }
     }
 }
 

@@ -1,4 +1,8 @@
 const errors = {
+    notFound: {
+        name: 'User not found',
+        description: 'User was not found'
+    },
     invalidName: {
         name: 'Invalid name',
         description: 'You must provide a valid name'
