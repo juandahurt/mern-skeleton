@@ -5,11 +5,13 @@ const UserService = require('./user.services');
 
 
 describe('User service', () => {
-    beforeAll(() => { return connectToDB() });
-    afterAll(() => { return disconnectDB() })
     describe('Create new user', () => {
-        beforeEach(() => { return User.deleteMany({}) });
-        afterEach(() => { User.deleteMany({}) });
+        beforeEach(async () => { 
+            await connectToDB();
+            await User.deleteMany({});
+            await disconnectDB();
+        });
+        // afterEach(() => { return User.deleteMany({}) });
         it('should create if all attrs are provided', async () => {
             let context = {
                 user: {

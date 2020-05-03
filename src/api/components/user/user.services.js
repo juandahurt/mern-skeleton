@@ -12,7 +12,7 @@ class UserService {
         await userSchema.validateAsync(context.user);
         let userDAL = new UserDAL();
 
-        if (userDAL.userExists(context.user.email)) {
+        if (await userDAL.userExists(context.user.email)) {
             throw new AppError(errors.emailAlreadyRegistered, 422);
         }
         return userDAL.create(context.user);
