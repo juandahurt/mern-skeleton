@@ -1,14 +1,14 @@
-const AppError = require('../../../error');
-const errors = require('./user.errors');
-const UserDAL = require('./user.dal');
-const userSchema = require('./user.schema');
+import { AppError } from '../../../error';
+import { errors } from './user.errors';
+import { UserDAL } from './user.dal';
+import { userSchema } from './user.schema';
 
-class UserService {
+export class UserService {
     /**
      * Creates a new user if the email provided is not being used.
      * @param context Enviroment context (must contain the user)
      */
-    async create(context) {
+    async create(context: any) {
         await userSchema.validateAsync(context.user);
         let userDAL = new UserDAL();
 
@@ -22,7 +22,7 @@ class UserService {
      * Deletes an user only if the id is valid and it exists. 
      * @param context Enviroment context (must contain the user id)
      */
-    async delete(context) {
+    async delete(context: any) {
         let userDAL = new UserDAL();
 
         if (!userDAL.isValid(context.userId)) {
@@ -35,5 +35,3 @@ class UserService {
         return await userDAL.delete(context.userId);
     }
 }
-
-module.exports = UserService;

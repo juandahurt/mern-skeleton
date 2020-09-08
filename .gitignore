@@ -1,5 +1,8 @@
 # Dependency directory
 node_modules
 
+# Build output
+dist
+
 # MacOS only
 .DS_Store

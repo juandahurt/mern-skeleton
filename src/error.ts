@@ -1,8 +1,11 @@
 /**
  * Centralized error object
  */
-class AppError extends Error {
-    constructor(errObj, httpCode) {
+export class AppError extends Error {
+    public description: String; 
+    public httpCode: Number; 
+
+    constructor(errObj: any, httpCode: Number) {
         super(errObj.description);
         Error.call(this);
         Error.captureStackTrace(this);
@@ -11,5 +14,3 @@ class AppError extends Error {
         this.httpCode = httpCode;
     }
 }
-
-module.exports = AppError;

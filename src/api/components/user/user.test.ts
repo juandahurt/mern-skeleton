@@ -1,14 +1,16 @@
-const { connectToDB, disconnectDB } = require('../../../mongoose');
-const errors = require('./user.errors');
-const User = require('./user.model');
-const UserService = require('./user.services');
+import { connectToDB, disconnectDB } from '../../../mongoose';
+import { errors } from './user.errors';
+import User from './user.model';
+import { UserService } from './user.services';
 
 
 describe('User service', () => {
     describe('Create new user', () => {
-        beforeEach(async () => { 
+        beforeEach(async () => {
             await connectToDB();
-            await User.deleteMany({});
+            await User.deleteMany({}); 
+        });
+        afterEach(async () => {
             await disconnectDB();
         });
         it('should create if all attrs are provided', async () => {
@@ -20,10 +22,7 @@ describe('User service', () => {
                 }
             };
             let user = await new UserService().create(context);
-            expect(user._id).toBeDefined();
-            expect(user.name).toBe(context.user.name);
-            expect(user.email).toBe(context.user.email);
-            expect(user.hashed_password).toBeDefined();
+            expect(user.get('name')).toBe(context.user.name);
         });
         it('should not create if no name provided', async () => {
             let context = {

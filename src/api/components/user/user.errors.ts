@@ -1,4 +1,4 @@
-const errors = {
+export const errors = {
     notFound: {
         name: 'User not found',
         description: 'User was not found'
@@ -20,5 +20,3 @@ const errors = {
         description: 'The email address provided is already registered'
     }
 }
-
-module.exports = errors;

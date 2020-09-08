@@ -1,13 +1,13 @@
-const User = require('./user.model');
+import User from './user.model';
 const { connectToDB, disconnectDB } = require('../../../mongoose');
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
-class UserDAL {
+export class UserDAL {
     /**
      * Adds a new user to the DB.
      * @param user User data
      */
-    async create(user) {
+    async create(user: any) {
         await connectToDB();
         let userRecord = await User.create(user);
         await disconnectDB();
@@ -18,7 +18,7 @@ class UserDAL {
      * Deletes an user from the DB.
      * @param userId User id
      */
-    async delete(userId) {
+    async delete(userId: mongoose.Types.ObjectId) {
         await connectToDB();
         let userRemoved = await User.findOneAndDelete({_id: userId});
         await disconnectDB();
@@ -30,7 +30,7 @@ class UserDAL {
      * @param id User id
      * @returns true if the id is valid, return false otherwise
      */
-    isValid(userId) {
+    isValid(userId: mongoose.Types.ObjectId) {
         return mongoose.Types.ObjectId.isValid(userId);
     }
 
@@ -39,12 +39,10 @@ class UserDAL {
      * @param key key attr
      * @param value attr value
      */
-    async userExists({key, value}) {
+    async userExists({key, value}: any) {
         await connectToDB();
         let userFound = await User.findOne({[key]: value});
         await disconnectDB();
         return userFound !== null;
     }
 }
-
-module.exports = UserDAL;

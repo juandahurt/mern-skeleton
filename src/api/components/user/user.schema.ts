@@ -1,8 +1,10 @@
-const Joi = require('@hapi/joi');
-const AppError = require('../../../error');
-const errors = require('./user.errors');
+// @ts-ignore
+import Joi from '@hapi/joi';
 
-const userSchema = Joi.object().keys({
+import { AppError } from '../../../error';
+import { errors } from './user.errors';
+
+export const userSchema = Joi.object().keys({
     name: 
         Joi.string()
         .required()
@@ -17,5 +19,3 @@ const userSchema = Joi.object().keys({
         .required()
         .error(new AppError(errors.invalidPassword, 400))
 });
-
-module.exports = userSchema;

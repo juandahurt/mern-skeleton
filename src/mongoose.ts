@@ -1,12 +1,14 @@
-const db = require('./config/database');
-const mongoose = require('mongoose');
-const logger = require('logger');
+// @ts-ignore
+import logger from '@juandahurt_t/logger';
+
+import { db } from './config/database';
+import mongoose from 'mongoose';
 
 
 /**
  * Opens the Mongoose connection.
  */
-const connectToDB = async () => {
+export const connectToDB = async () => {
     try {
         await mongoose.connect(db.uri, {
             useNewUrlParser: true,
@@ -15,20 +17,18 @@ const connectToDB = async () => {
         });
     } catch (err) {
         logger.error(err.message);
-        process.exit(1);
+        process.exit();
     }
 }
 
 /**
  * Closes the Mongoose connection.
  */
-const disconnectDB = async () => {
+export const disconnectDB = async () => {
     try {
         await mongoose.connection.close();
     } catch (err) {
         logger.error(err.message);
-        process.exit(1);
+        process.exit();
     }
 }
-
-module.exports = { connectToDB, disconnectDB };
